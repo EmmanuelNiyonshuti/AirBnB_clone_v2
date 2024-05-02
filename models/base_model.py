@@ -25,10 +25,10 @@ class BaseModel:
                                                      '%Y-%m-%dT%H:%M:%S.%f')
             kwargs['created_at'] = datetime.strptime(kwargs['created_at'],
                                                      '%Y-%m-%dT%H:%M:%S.%f')
+            kwargs.pop('__class__', None)
+            self.__dict__.update(kwargs)
             """creating instance attrs from the kwargs"""
             {setattr(self, attr_name, attr_value) for attr_name, attr_value in kwargs.items()}
-            del kwargs['__class__']
-            self.__dict__.update(kwargs)
 
     def __str__(self):
         """Returns a string representation of the instance"""

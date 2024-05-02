@@ -6,7 +6,8 @@ from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, ForeignKey, Float, Table
 from sqlalchemy.orm import relationship
 from models import storage
-from review import Review
+from models.review import Review
+from models.amenity import Amenity
 
 """Define the association table 'place_amenity"""
 place_amenity = Table('place_amenity', Base.metadata,
@@ -35,14 +36,28 @@ class Place(BaseModel, Base):
 
 
     load_dotenv()
-    if env['HBNB_TYPE_STORAGE'] == "db":
+    if env.get('HBNB_TYPE_STORAGE') == 'db':
         reviews = relationship('Review', back_populates='place', cascade='delete')
-        amenities = relationship('Amenity', secondary='place_amenity', viewobly=False)
+        amenities = relationship('Amenity', secondary='place_amenity', viewonly=False)
     else:
         @property
         def reviews(self):
             r_instances = storage.all(Review)
-            reviews_list = [r for r in r_instances.values() if r.place_id == self.id]
+            reviews_list = [review for review in r_instances.values() if review.place_id == self.id]
             return reviews_list
+        @property
+        def amenities(self):
+            """Getter attribute for amenities"""
+            amenity_instances = []
+            for obj in storage.all(Amenity).values():
+                if obj.id in self.amenity_ids:
+                    amenity_instances.append(obj)
+            return amenity_instances
 
-        # def amenities(self):
+        @amenities.setter
+        def amenities(self, amenity):
+            """Setter attribute for amenities"""
+            if isinstance(amenity, Amenity):
+                if amenity.id not in self.amenity_ids:
+                    self.amenity_ids.append(amenity.id)
+                    storage.save()

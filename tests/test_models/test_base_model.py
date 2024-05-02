@@ -36,6 +36,7 @@ class test_basemodel(unittest.TestCase):
         """ """
         i = self.value()
         copy = i.to_dict()
+        copy.pop('__class__', None)
         new = BaseModel(**copy)
         self.assertFalse(new is i)
 
@@ -97,3 +98,28 @@ class test_basemodel(unittest.TestCase):
         n = new.to_dict()
         new = BaseModel(**n)
         self.assertFalse(new.created_at == new.updated_at)
+
+
+    def test_dict_key_remove(self):
+        """"""
+        my_i = self.value()
+        my_n = my_i.to_dict()
+        self.assertIsInstance(my_n, dict)
+        self.assertNotIn('_sa_instance_state', my_n)
+
+    def test_dict_keys(self):
+        my_i = self.value()
+        my_n = my_i.to_dict()
+        self.assertIn('__class__', my_n)
+        self.assertEqual(my_n['__class__'], self.name)
+        self.assertIn('created_at', my_n)
+        self.assertIn('updated_at', my_n)
+    
+    def test_delete(self):
+        """"""
+        from models import storage
+        i = self.value()
+        i.save()
+        self.assertIn(i, storage.all(self.value))
+        i.delete()
+        self.assertNotIn(i, storage.all(self.value))
