@@ -1,0 +1,5 @@
+{
+    "codeium.detectProxy": false,
+    "codeium.enableCodeLens": false,
+    "codeium.enableExplainProblem": false
+}
