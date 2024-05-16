@@ -26,7 +26,7 @@ echo "
 if [ -L /data/web_static/current ]; then
 	sudo rm /data/web_static/current
 fi
-sudo ln -s /data/web_static/releases/test/  /data/web_static/current
+sudo ln -s /data/web_static/releases/test  /data/web_static/current
 
 #add a location block for /hbnb_static in sites-available/default file
 sudo sed -i '/server_name _;/a\\tlocation \/hbnb_static {\n\t\talias \/data\/web_static\/current;\n\t}' /etc/nginx/sites-available/default
@@ -37,4 +37,4 @@ sudo ln -s /etc/nginx/sites-available/default  /etc/nginx/sites-enabled/
 
 sudo nginx -t
 
-sudo service nginx reload
+sudo service nginx restart
