@@ -7,11 +7,11 @@ apt-get install -y nginx
 sudo mkdir -p /data/web_static/shared/
 sudo mkdir -p /data/web_static/releases/test/
 
-#recursivery Give ownership of the /data/ folder to the ubuntu user AND group
-sudo chown -R ubuntu: /data/
-
 #create a file with some contents in test directory
 sudo touch /data/web_static/releases/test/index.html
+
+#recursivery Give ownership of the /data/ folder to the ubuntu user AND group
+sudo chown -R ubuntu: /data/
 
 echo "
 <html>
@@ -37,4 +37,4 @@ sudo ln -s /etc/nginx/sites-available/default  /etc/nginx/sites-enabled/
 
 sudo nginx -t
 
-service nginx reload
+sudo service nginx reload
