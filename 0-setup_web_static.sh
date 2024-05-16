@@ -22,7 +22,10 @@ echo "
    </body>
 </html>" > /data/web_static/releases/test/index.html
 
-#create a symbolic link with of test directory with current directory
+#create a symbolic link if it doesn't already exists
+if [ -L /data/web_static/current ]; then
+	sudo rm /data/web_static/current
+fi
 sudo ln -s /data/web_static/releases/test/  /data/web_static/current
 
 #add a location block for /hbnb_static in sites-available/default file
