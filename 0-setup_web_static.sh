@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 #sets up  web servers for the deployment of web_static
 
-#Install Nginx if it not already installed
+#Install Nginx if not already installed
 sudo apt-get install -y nginx
-#create necessary directories
+
+#create directories
 sudo mkdir  /data/
 sudo mkdir -p /data/web_static/
 sudo mkdir -p /data/web_static/releases/
@@ -20,9 +21,9 @@ echo "
    </body>
 </html>" > /data/web_static/releases/test/index.html
 
-if [ -L /data/web_static/current ]; then
-	sudo rm /data/web_static/current
-fi
+# if [ -L /data/web_static/current ]; then
+# 	sudo rm /data/web_static/current
+# fi
 sudo ln -s /data/web_static/releases/test/  /data/web_static/current
 
 #recursivery Give ownership of the /data/ folder to the ubuntu user AND group
