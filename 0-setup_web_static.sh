@@ -40,4 +40,4 @@ sudo ln -s /etc/nginx/sites-available/default  /etc/nginx/sites-enabled/
 
 sudo nginx -t
 
-sudo service nginx reload
+sudo systemctl nginx restart
