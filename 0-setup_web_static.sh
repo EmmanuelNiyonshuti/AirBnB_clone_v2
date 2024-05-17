@@ -4,8 +4,10 @@
 #Install Nginx if it not already installed
 apt-get install -y nginx
 #create necessary directories
-sudo mkdir -p /data/web_static/shared/
-sudo mkdir -p /data/web_static/releases/test/
+sudo mkdir -p /data/web_static
+sudo mkdir -p /data/web_static/shared
+sudo mkdir -p /data/web_static/releases
+sudo mkdir -p /data/web_static/releases/test
 
 #create a file with some contents in test directory
 sudo touch /data/web_static/releases/test/index.html
@@ -14,7 +16,6 @@ sudo touch /data/web_static/releases/test/index.html
 # sudo chown -R ubuntu: /data/
 sudo chown -R ubuntu: /data/
 sudo chown -R ubuntu: /data/web_static
-sudo chown -R ubuntu: /data/web_static/releases
 
 echo "
 <html>
