@@ -1,26 +1,38 @@
 #!/usr/bin/python3
 """
-deploy web_static to two nginx web servers.
+This module provides functionality to deploy
+web_static content to multiple servers using Fabric3.
 """
 import os
 from datetime import datetime
 from fabric.operations import env, put, run
 
-env.hosts = ['ubuntu@web01:80', 'ubuntu@web02:80']
-
+env.hosts = ['ubuntu@34.232.68.210', 'ubuntu@52.91.150.38']
 def do_deploy(archive_path):
-    """upload the archive to the servers , decompress the archive and serve them.
+
+    """
+    Deploy the web_static content to two servers using Fabric3.
+
+    Uploads the .tgz archive compressed by gzip to the servers,
+    extracts the files from the archive, and adds them
+    into a new directory for serving.
+
+    :param archive_path: The path to the .tgz archive to be deployed.
     """
     if os.path.isfile(archive_path):
-
         put(archive_path, '/tmp/')
 
         curr_time = datetime.now().strftime("%Y%m%d%H%M%S")
-        decompressed_dir = "web_static_{}".format(curr_time)
+        new = "web_static_{}".format(curr_time)
 
-        run('sudo mkdir /data/web_static/releases/{}/'.format(decompressed_dir))
+        run('sudo mkdir -p /data/web_static/releases/{}/'.format(new))
 
-        run('sudo tar -xvf /tmp/{} -C /data/web_static/releases/{}/'.format(os.path.basename(archive_path), decompressed_dir))
+        run('sudo tar -xzf /tmp/{} -C /data/web_static/releases/{}/'.format(os.path.basename(archive_path), new))
         run('sudo rm /tmp/{}'.format(os.path.basename(archive_path)))
-        run('sudo rm /data/web_static/current')
-        run('sudo ln -s /data/web_static/releases/{} /data/web_static/current'.format(decompressed_dir))
+        run('sudo mv /data/web_static/releases/{}/web_static/* /data/web_static/releases/{}/'.format(new, new))
+        run('sudo rm -rf /data/web_static/releases/{}/web_static/'.format(new))
+        run('sudo rm -rf /data/web_static/current')
+        run('sudo ln -s /data/web_static/releases/{}/ /data/web_static/current'.format(new))
+        run('sudo service nginx reload')
+        print("New version deployed!")
+
