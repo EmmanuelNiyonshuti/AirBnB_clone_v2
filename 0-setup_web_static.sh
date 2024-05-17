@@ -10,6 +10,7 @@ sudo mkdir -p /data/web_static/
 sudo mkdir -p /data/web_static/releases/
 sudo mkdir -p /data/web_static/shared/
 sudo mkdir -p /data/web_static/releases/test/
+sudo mkdir -p /data/web_static/current
 
 sudo touch /data/web_static/releases/test/index.html
 echo "
@@ -30,7 +31,7 @@ sudo ln -s /data/web_static/releases/test/  /data/web_static/current
 sudo chown -R ubuntu: /data/
 
 #add a location block for /hbnb_static in sites-available/default file
-sudo sed -i '/server_name _;/a\\tlocation \/hbnb_static {\n\t\talias \/data\/web_static\/current/;\n\t}' /etc/nginx/sites-available/default
+sudo sed -i '/server_name _;/a\\tlocation \/hbnb_static {\n\t\talias \/data\/web_static\/current;\n\t}' /etc/nginx/sites-available/default
 
 if [ -L /etc/nginx/sites-enabled/default ]; then
 	sudo rm /etc/nginx/sites-enabled/default
