@@ -12,11 +12,9 @@ sudo touch /data/web_static/releases/test/index.html
 
 #recursivery Give ownership of the /data/ folder to the ubuntu user AND group
 # sudo chown -R ubuntu: /data/
-sudo chown ubuntu: /data/
-sudo chown ubuntu: /data/web_static
-sudo chown ubuntu: /data/web_static/releases
-sudo touch /data/web_static/releases/test/index.html
-sudo chown ubuntu: /data/web_static/releases/test/index.html
+sudo chown -R ubuntu: /data/
+sudo chown -R ubuntu: /data/web_static
+sudo chown -R ubuntu: /data/web_static/releases
 
 echo "
 <html>
