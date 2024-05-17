@@ -15,7 +15,7 @@ def do_deploy(archive_path):
     Deploy the web_static content to two servers using Fabric3.
 
     Uploads the .tgz archive compressed by gzip to the servers,
-    extracts the files from the archive, and adds them
+    extracts the files from the archive and adds them
     into a new directory for serving.
 
     :param archive_path: The path to the .tgz archive to be deployed.
