@@ -19,7 +19,7 @@ def do_deploy(archive_path):
 
     :param archive_path: The path to the .tgz archive to be deployed.
     """
-    if os.path.isfile(archive_path):
+    if os.path.exists(archive_path):
 
         put(archive_path, '/tmp/')
         curr_time = datetime.now().strftime("%Y%m%d%H%M%S")
