@@ -11,7 +11,12 @@ sudo mkdir -p /data/web_static/releases/test/
 sudo touch /data/web_static/releases/test/index.html
 
 #recursivery Give ownership of the /data/ folder to the ubuntu user AND group
-sudo chown -R ubuntu: /data/
+# sudo chown -R ubuntu: /data/
+sudo chown ubuntu: /data/
+sudo chown ubuntu: /data/web_static
+sudo chown ubuntu: /data/web_static/releases
+sudo touch /data/web_static/releases/test/index.html
+sudo chown ubuntu: /data/web_static/releases/test/index.html
 
 echo "
 <html>
@@ -38,3 +43,4 @@ sudo ln -s /etc/nginx/sites-available/default  /etc/nginx/sites-enabled/
 sudo nginx -t
 
 sudo service nginx restart
+
