@@ -11,7 +11,7 @@ sudo mkdir -p /data/web_static/releases/
 sudo mkdir -p /data/web_static/shared/
 sudo mkdir -p /data/web_static/releases/test/
 
-echo "
+sudo echo "
 <html>
    <head>
    </head>
