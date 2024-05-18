@@ -21,9 +21,10 @@ def do_deploy(archive_path):
     :param archive_path: The path to the .tgz archive to be deployed.
     """
     if os.path.isfile(archive_path):
+        put(archive_path, '/tmp/')
         curr_time = datetime.now().strftime("%Y%m%d%H%M%S")
         new_dir = "web_static_{}".format(curr_time)
-        put(archive_path, '/tmp/')
+
         run('sudo mkdir -p /data/web_static/releases/{}/'.format(new_dir))
         run(('sudo tar -xzf /tmp/{} -C /data/web_static/releases/{}/'
              .format(os.path.basename(archive_path), new_dir)))
@@ -35,3 +36,5 @@ def do_deploy(archive_path):
         run('sudo rm -rf /data/web_static/current')
         run(('sudo ln -s /data/web_static/releases/{}/ '
              '/data/web_static/current').format(new_dir))
+    else:
+        return False
