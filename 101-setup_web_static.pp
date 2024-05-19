@@ -18,30 +18,18 @@ file { '/data/':
 
 file { '/data/web_static':
   ensure => 'directory',
-  owner  => 'ubuntu',
-  group  => 'ubuntu',
-  mode   => '0755',
 }
 
 file { '/data/web_static/releases':
   ensure => 'directory',
-  owner  => 'ubuntu',
-  group  => 'ubuntu',
-  mode   => '0755',
 }
 
 file { '/data/web_static/shared':
   ensure => 'directory',
-  owner  => 'ubuntu',
-  group  => 'ubuntu',
-  mode   => '0755',
 }
 
 file { '/data/web_static/releases/test':
   ensure => 'directory',
-  owner  => 'ubuntu',
-  group  => 'ubuntu',
-  mode   => '0755',
 }
 
 # Create a test HTML file
@@ -54,8 +42,6 @@ file { '/data/web_static/releases/test/index.html':
     Holberton School
   </body>
 </html>',
-  owner   => 'ubuntu',
-  group   => 'ubuntu',
 }
 
 # Ensure the symbolic link is present, removing it first if it exists
@@ -63,8 +49,6 @@ file { '/data/web_static/current':
   ensure => 'link',
   target => '/data/web_static/releases/test',
   force  => true, # Removes existing symlink if it exists
-  owner  => 'ubuntu',
-  group  => 'ubuntu',
 }
 
 # Update Nginx configuration
