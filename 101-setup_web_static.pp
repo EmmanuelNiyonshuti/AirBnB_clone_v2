@@ -2,40 +2,42 @@
 
 # Install Nginx if not already installed
 package { 'nginx':
-  ensure => installed,
+  ensure          => 'installed',
+  provider        => 'apt',
+  install_options => ['-y'],
 }
 
 # Ensure the directories are created
 file { '/data':
-  ensure => directory,
+  ensure => 'directory',
   owner  => 'ubuntu',
   group  => 'ubuntu',
   mode   => '0755',
 }
 
 file { '/data/web_static':
-  ensure => directory,
+  ensure => 'directory',
   owner  => 'ubuntu',
   group  => 'ubuntu',
   mode   => '0755',
 }
 
 file { '/data/web_static/releases':
-  ensure => directory,
+  ensure => 'directory',
   owner  => 'ubuntu',
   group  => 'ubuntu',
   mode   => '0755',
 }
 
 file { '/data/web_static/shared':
-  ensure => directory,
+  ensure => 'directory',
   owner  => 'ubuntu',
   group  => 'ubuntu',
   mode   => '0755',
 }
 
 file { '/data/web_static/releases/test':
-  ensure => directory,
+  ensure => 'directory',
   owner  => 'ubuntu',
   group  => 'ubuntu',
   mode   => '0755',
@@ -43,7 +45,7 @@ file { '/data/web_static/releases/test':
 
 # Create a test HTML file
 file { '/data/web_static/releases/test/index.html':
-  ensure  => file,
+  ensure  => 'file',
   content => '<html>
   <head>
   </head>
@@ -58,7 +60,7 @@ file { '/data/web_static/releases/test/index.html':
 
 # Ensure the symbolic link is present
 file { '/data/web_static/current':
-  ensure => link,
+  ensure => 'link',
   target => '/data/web_static/releases/test',
   owner  => 'ubuntu',
   group  => 'ubuntu',
