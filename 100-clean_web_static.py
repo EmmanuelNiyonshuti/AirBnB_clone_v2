@@ -30,6 +30,7 @@ def do_clean(number=0):
     with cd("/data/web_static/releases"):
         remote_archives = run('ls -tr').split()
         remote_archives = [a for a in remote_archives if 'web_static_' in a]
+        remote_archives = sorted(remote_archives)
         archives_to_delete_remote = remote_archives[:-number]
 
         for archive in archives_to_delete_remote:
