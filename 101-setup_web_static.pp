@@ -8,11 +8,12 @@ package { 'nginx':
 }
 
 # Ensure the directories are created
-file { '/data':
+file { '/data/':
   ensure => 'directory',
   owner  => 'ubuntu',
   group  => 'ubuntu',
   mode   => '0755',
+  recurse => true,
 }
 
 file { '/data/web_static':
@@ -55,15 +56,18 @@ file { '/data/web_static/releases/test/index.html':
 </html>',
   owner   => 'ubuntu',
   group   => 'ubuntu',
-  mode    => '0644',
+}
+#remove symbolic link if it already exists
+file {'/data/web_static/current':
+    ensure => 'absent',
 }
 
-# Ensure the symbolic link is present
 file { '/data/web_static/current':
   ensure => 'link',
   target => '/data/web_static/releases/test',
   owner  => 'ubuntu',
   group  => 'ubuntu',
+  require => File['/data/web_static/releases/test'],
 }
 
 # Update Nginx configuration
