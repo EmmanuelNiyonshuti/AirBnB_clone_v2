@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-# starts a Flask web application listening on all Ips on the same network.
+"""starts a Flask web application listening on all Ips on the same network."""
 
 from flask import Flask
 
@@ -7,6 +7,7 @@ app = Flask(__name__)
 
 @app.route("/", strict_slashes=False)
 def hello():
+    """Displays Hello HBNB"""
     return "Hello HBNB!"
 
 if __name__ == "__main__":
