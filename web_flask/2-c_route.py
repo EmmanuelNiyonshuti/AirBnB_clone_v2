@@ -4,7 +4,7 @@ Starts a Flask web application
 listening on all IPs on the same network.
 """
 from flask import Flask
-
+from markupsafe import escape
 
 app = Flask(__name__)
 
@@ -24,7 +24,8 @@ def hbnb():
 @app.route("/c/<text>", strict_slashes=False)
 def all_c(text):
     """Displays C followed by the value of the text"""
-    return f"C {text}"
+    text = text.replace("_", " ")
+    return f"C {escape(text)}"
 
 
 if __name__ == "__main__":
