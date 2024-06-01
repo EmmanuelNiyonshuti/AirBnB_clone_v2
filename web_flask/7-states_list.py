@@ -9,12 +9,8 @@ app = Flask(__name__)
 
 @app.route('/states_list', strict_slashes=False)
 def states():
-    if os.getenv('HBNB_TYPE_STORAGE') == 'db':
-        states_objs = storage.all(State).values()
-        return render_template('7-states_list.html', states= states_objs)
-    else:
-        states_objs = storage.all(State).values()
-        return render_template('7-states_list.html', states= states_objs)
+    states_objs = storage.all(State).values()
+    return render_template('7-states_list.html', states= states_objs)
 
 @app.teardown_appcontext
 def teardown_db(exception):
