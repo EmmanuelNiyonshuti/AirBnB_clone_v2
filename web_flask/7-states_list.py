@@ -6,6 +6,7 @@ from models.state import State
 
 app = Flask(__name__)
 
+
 @app.teardown_appcontext
 def teardown_db(exception):
     """close the connection to the database"""
@@ -15,8 +16,9 @@ def teardown_db(exception):
 @app.route('/states_list', strict_slashes=False)
 def states():
     """list all states objects in a format <state.id>: <B><state.name></B>"""
-    states_objs = storage.all(State).values()
-    return render_template('7-states_list.html', states=states_objs)
+    states = storage.all(State).values()
+    sorted_states = sorted(states, key=lambda state: state.name)
+    return render_template('7-states_list.html', states=sorted_states)
 
 
 if __name__ == '__main__':
