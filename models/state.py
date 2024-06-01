@@ -5,6 +5,7 @@ from sqlalchemy import Column, String
 from sqlalchemy.orm import relationship
 import os
 
+
 class State(BaseModel, Base):
     """ State class """
     if os.getenv('HBNB_TYPE_STORAGE') == 'db':
@@ -13,15 +14,16 @@ class State(BaseModel, Base):
         cities = relationship('City', back_populates='state', cascade='delete')
     else:
         name = ""
+
         @property
         def cities(self):
             """ Getter method that returns the list of City instances
             with state_id equals to the current State.id"""
             from models.city import City
             from models import storage
-            city_instances = storage.all(City)
-            filtered_cities = [city for city in city_instances.values() if city.state_id == self.id]
-            return filtered_cities
+            c_objs = storage.all(City)
+            state_city = [c for c in c_objs.values() if c.state_id == self.id]
+            return state_city
 
         def __init__(self, *args, **kwargs):
             super().__init__(*args, **kwargs)

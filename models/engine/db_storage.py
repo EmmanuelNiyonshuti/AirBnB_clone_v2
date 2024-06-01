@@ -15,8 +15,9 @@ from models.place import Place
 load_dotenv()
 
 db_url = "mysql+mysqldb://{}:{}@{}/{}".format(
-getenv('HBNB_MYSQL_USER'), getenv('HBNB_MYSQL_PWD'),
-getenv('HBNB_MYSQL_HOST'), getenv('HBNB_MYSQL_DB'))
+        getenv('HBNB_MYSQL_USER'), getenv('HBNB_MYSQL_PWD'),
+        getenv('HBNB_MYSQL_HOST'), getenv('HBNB_MYSQL_DB'))
+
 
 class DBStorage:
     """new engine class
@@ -43,14 +44,14 @@ class DBStorage:
                 for k in rm_keys:
                     obj_dict.pop(k, None)
                     d[obj.id] = obj_dict
-            return d        
+            return d
         else:
             return {}
 
     def new(self, obj):
         """add the object to the current database session"""
         self.__session.add(obj)
-    
+
     def save(self):
         """commit all changes of the current database session"""
         self.__session.commit()
@@ -59,13 +60,13 @@ class DBStorage:
         """delete from the current database session"""
         if obj is not None:
             self.__session.delete(obj)
-    
+
     def reload(self):
         """Create all tables in the database and initialize a session"""
         Base.metadata.create_all(self.__engine)
-        self.__session = scoped_session(sessionmaker(bind=self.__engine, expire_on_commit=False))
+        self.__session = scoped_session(sessionmaker(
+            bind=self.__engine, expire_on_commit=False))
 
     def close(self):
         """Clean up the session"""
         self.__session.remove()
-
