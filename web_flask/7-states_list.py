@@ -9,9 +9,9 @@ app = Flask(__name__)
 
 @app.route('/states_list', strict_slashes=False)
 def states():
-    """list all states objects in a format <state.name>: <state.id>""""
+    """list all states objects in a format <state.id>: <B><state.name></B>""""
     states_objs = storage.all(State).values()
-    return render_template('7-states_list.html', states= states_objs)
+    return render_template('7-states_list.html', states=states_objs)
 
 @app.teardown_appcontext
 def teardown_db(exception):
@@ -20,4 +20,4 @@ def teardown_db(exception):
 
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=5000, debug=True)
