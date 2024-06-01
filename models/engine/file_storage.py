@@ -10,15 +10,15 @@ class FileStorage:
 
     def all(self, cls=None):
         """Returns a dictionary"""
-        return FileStorage.__objects
-        # if cls is None:
-        #     return FileStorage.__objects
-        # else:
-        #     filter_dict = {}
-        #     for key, value in FileStorage.__objects.items():
-        #         if isinstance(value, cls):
-        #             filter_dict[key] = value
-        #         return filter_dict
+        if cls is None:
+            return FileStorage.__objects
+        else:
+            filter_dict = {}
+            for key, value in FileStorage.__objects.items():
+                if isinstance(value, cls):
+                    filter_dict[key] = value
+            return filter_dict
+
 
     def new(self, obj):
         """Adds new object to storage dictionary"""
@@ -53,7 +53,7 @@ class FileStorage:
             with open(FileStorage.__file_path, 'r') as f:
                 temp = json.load(f)
                 for key, val in temp.items():
-                        self.all()[key] = classes[val['__class__']](**val)
+                    self.all()[key] = classes[val['__class__']](**val)
         except FileNotFoundError:
             pass
 
@@ -66,3 +66,7 @@ class FileStorage:
                 self.save()
         else:
             return
+
+    def close(self):
+        """calls reload for deserializing the JSON file to objects"""
+        self.reload()

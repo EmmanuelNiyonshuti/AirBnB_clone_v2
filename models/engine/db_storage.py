@@ -64,3 +64,8 @@ class DBStorage:
         """Create all tables in the database and initialize a session"""
         Base.metadata.create_all(self.__engine)
         self.__session = scoped_session(sessionmaker(bind=self.__engine, expire_on_commit=False))
+
+    def close(self):
+        """Clean up the session"""
+        self.__session.remove()
+
