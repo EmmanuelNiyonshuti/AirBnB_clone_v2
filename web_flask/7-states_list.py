@@ -18,6 +18,7 @@ def states():
     """list all states objects in a format <state.id>: <B><state.name></B>"""
     state_objs = storage.all(State).values()
     return render_template('7-states_list.html', states=state_objs)
+    teardown_db()
 
 
 if __name__ == '__main__':
