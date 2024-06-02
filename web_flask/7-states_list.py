@@ -16,11 +16,10 @@ def teardown_db(exception):
 
 
 @app.route("/states_list", strict_slashes=False)
-def states():
+def display_states():
     """list all states objects in a format <state.id>: <B><state.name></B>"""
     state_objs = storage.all(State).values()
     return render_template('7-states_list.html', states=state_objs)
-
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', port=5000)
