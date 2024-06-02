@@ -1,5 +1,7 @@
 #!/usr/bin/python3
-"""Starts a flask web application"""
+"""
+Starts a flask web application for AirBnB clone.
+"""
 from flask import Flask, render_template
 from models import storage
 from models.state import State
@@ -13,12 +15,11 @@ def teardown_db(exception):
     storage.close()
 
 
-@app.route('/states_list', strict_slashes=False)
+@app.route("/states_list", strict_slashes=False)
 def states():
     """list all states objects in a format <state.id>: <B><state.name></B>"""
     state_objs = storage.all(State).values()
     return render_template('7-states_list.html', states=state_objs)
-    teardown_db()
 
 
 if __name__ == '__main__':
