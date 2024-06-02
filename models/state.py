@@ -17,12 +17,15 @@ class State(BaseModel, Base):
 
         @property
         def cities(self):
-            """ Getter method that returns the list of City instances
-            with state_id equals to the current State.id"""
+            """
+            Getter method that returns the list of City instances
+            with state_id equals to the State.id
+            (returns the cities of a particular state)
+            """
             from models.city import City
             from models import storage
-            c_objs = storage.all(City)
-            state_city = [c for c in c_objs.values() if c.state_id == self.id]
+            c_objs = storage.all(City).values()
+            state_city = [c for c in c_objs if c.state_id == self.id]
             return state_city
 
         def __init__(self, *args, **kwargs):
