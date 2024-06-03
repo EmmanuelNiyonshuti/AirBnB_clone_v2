@@ -75,4 +75,4 @@ class DBStorage:
 
     def close(self):
         """Clean up the session"""
-        self.__session.close()
+        self.__session.remove()
