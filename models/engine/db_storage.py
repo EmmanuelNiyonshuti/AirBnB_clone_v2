@@ -33,20 +33,26 @@ class DBStorage:
             Base.metadata.drop_all()
 
     def all(self, cls=None):
-        """query on the current db and return a dictionary"""
+        """
+        Query on the current database session (self.__session)
+            and return all objects as a dictionary:
+        - If cls is None, query all types of objects (i.e. all tables)
+        - If cls is not None, query all objects of cls type
+        """
+        obj_dict = {}
         if cls is not None:
-            objs = self.__session.query(cls).all()
-            obj_dict = {}
-            d = {}
-            for obj in objs:
-                obj_dict = obj.to_dict()
-                rm_keys = ['_sa_instance_state', '__class__']
-                for k in rm_keys:
-                    obj_dict.pop(k, None)
-                    d[obj.id] = obj_dict
-            return d
+            cls_objs = self.__session.query(cls)
+            for obj in cls_objs:
+                """key = f"{obj.__class__.__name__}.{obj.id}"""
+                obj_dict[obj] = obj
+            return obj_dict
         else:
-            return {}
+            for all_objs in Base.__subclasses__():
+                objs = self.__session.query(all_objs)
+                for obj in objs:
+                    """key = f"{obj.__class__.__name__}.{obj.id}"""
+                    obj_dict[obj] = obj
+                return obj_dict
 
     def new(self, obj):
         """add the object to the current database session"""
